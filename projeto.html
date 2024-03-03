@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa XPTO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left; 
+            padding: 10px 20px; 
+            background-color: #333; 
+            color: white; 
+        }
+
+        #logo {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        h1 {
+            margin: 0; 
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        button {
+            background-color: #0099ff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0077cc;
+        }
+
+        main {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input.invalid {
+            border-color: #ff6b6b;
+        }
+
+        input.valid {
+            border-color: #6bff6b;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .help-message {
+            color: #777;
+            font-size: 12px;
+            margin-top: -8px;
+            margin-bottom: 16px;
+        }
+
+        .reminder, .copyright {
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .textarea {
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="3.png" alt="Logo da Empresa XPTO - Descrição do logo aqui">
+        <h1>Empresa XPTO</h1>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+        <section>
+            <h2>Formulário de Contato</h2>
+
+            <form id="myForm" role="form" aria-labelledby="formTitle">
+                <h3 id="formTitle">Formulário de Contato</h3>
+
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required aria-labelledby="nameLabel nameHelp" aria-invalid="false">
+                <div class="help-message" id="nameHelp" aria-live="assertive"></div>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required aria-labelledby="emailLabel emailHelp" aria-invalid="false">
+                <div class="help-message" id="emailHelp" aria-live="assertive"></div>
+
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="4" required aria-labelledby="messageLabel messageHelp" aria-invalid="false"></textarea>
+                <div class="help-message" id="messageHelp" aria-live="assertive"></div>
+
+                <button type="button" id="submitButton">Enviar</button>
+
+                <div class="reminder">* Todos os campos são obrigatórios.</div>
+                <div class="copyright">&copy; 2024 Luís Eduardo Remelli</div>
+                <div class="textarea"> Atividade 03 </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        function navigateToMainContent() {
+            document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('submitButton').addEventListener('click', validateAndSubmit);
+
+        function validateAndSubmit() {
+            const form = document.getElementById('myForm');
+            const inputs = form.querySelectorAll('input[required]');
+            const textarea = form.querySelector('textarea[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const helpMessage = document.getElementById(`${input.id}Help`);
+
+                if (input.value.trim() === '') {
+                    input.classList.add('invalid');
+                    input.setAttribute('aria-invalid', 'true');
+                    helpMessage.innerText = 'Campo obrigatório. Preencha este campo.';
+                    isValid = false;
+                } else {
+                    input.classList.remove('invalid');
+                    input.classList.add('valid');
+                    input.setAttribute('aria-invalid', 'false');
+                    helpMessage.innerText = '';
+                }
+            });
+
+            if (textarea.value.trim() === '') {
+                textarea.classList.add('invalid');
+                textarea.setAttribute('aria-invalid', 'true');
+                document.getElementById('messageHelp').innerText = 'Campo obrigatório. Preencha este campo.';
+                isValid = false;
+            } else {
+                textarea.classList.remove('invalid');
+                textarea.classList.add('valid');
+                textarea.setAttribute('aria-invalid', 'false');
+                document.getElementById('messageHelp').innerText = '';
+            }
+
+            if (isValid) {
+                alert('Formulário enviado com sucesso!');
+            } else {
+                alert('Preencha todos os campos obrigatórios antes de enviar.');
+            }
+        }
+    </script>
+</body>
+
+</html>
